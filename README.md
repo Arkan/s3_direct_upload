@@ -74,9 +74,11 @@ Optionally, you can also place this template in the same view for the progress b
 <div id="file-{%=o.unique_id%}" class="upload">
   {%=o.name%}
   <div class="progress"><div class="bar" style="width: 0%"></div></div>
+  <p class="progression"></p>
 </div>
 </script>
 ```
+The progression class will only hold the uploading percentage just as "42%". This is optional.
 
 ## Options for form helper
 * `callback_url:` No default. The url that is POST'd to after file is uploaded to S3. If you don't specify this option, no callback to the server will be made after the file has uploaded to S3.
@@ -93,15 +95,15 @@ Optionally, you can also place this template in the same view for the progress b
 
 ### Example with all options
 ```ruby
-<%= s3_uploader_form callback_url: model_url, 
-                     callback_method: "POST", 
-                     callback_param: "model[image_url]", 
-                     key: "files/{timestamp}-{unique_id}-#{SecureRandom.hex}/${filename}", 
-                     key_starts_with: "files/", 
-                     acl: "public-read", 
-                     max_file_size: 50.megabytes, 
-                     id: "s3-uploader", 
-                     class: "upload-form", 
+<%= s3_uploader_form callback_url: model_url,
+                     callback_method: "POST",
+                     callback_param: "model[image_url]",
+                     key: "files/{timestamp}-{unique_id}-#{SecureRandom.hex}/${filename}",
+                     key_starts_with: "files/",
+                     acl: "public-read",
+                     max_file_size: 50.megabytes,
+                     id: "s3-uploader",
+                     class: "upload-form",
                      data: {:key => :val} do %>
   <%= file_field_tag :file, multiple: true %>
 <% end %>
